@@ -3,7 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const app = express();
 const port= process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middleware
 app.use(cors())
@@ -29,7 +29,7 @@ async function run() {
     await client.connect();
 
     const artCollection = client.db('artDB').collection('art')
-
+    const craftCollection = client.db('islam88758').collection('artCraftDb')
 
     app.get('/art',async(req,res)=>{
       const cursor = artCollection.find()
@@ -43,7 +43,32 @@ async function run() {
         const result = await artCollection.insertOne(newArt)
         res.send(result)
     })
+
+    app.get('/craft', async(req,res)=>{
+      const cursor = craftCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
  
+    app.get('/craft',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await artCollection.findOne(query)
+      res.send(result)
+    })
+
+
+
+    app.delete('/art/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await artCollection.deleteOne(query)
+      res.send(result)
+    })
+
+
+
+
 
 
     // Send a ping to confirm a successful connection
