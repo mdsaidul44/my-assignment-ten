@@ -64,7 +64,33 @@ async function run() {
       const query = {_id: new ObjectId(id)}
       const result = await artCollection.deleteOne(query)
       res.send(result)
-    })
+    }) 
+    
+
+
+    app.put('/art/:id',async(req,res)=>{
+      const id =req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const option = {upsert: true}
+      const updatedArt = req.body;
+      const art ={
+        $set:{
+          subcategory_name: updatedArt.subcategory_name,
+          item_name: updatedArt.item_name,
+          user_email: updatedArt.user_email,
+          short_description: updatedArt.short_description,
+          price: updatedArt.price,
+          rating: updatedArt.rating,
+          customization: updatedArt.customization,
+          processing_time: updatedArt.processing_time,
+          stockStatus: updatedArt.stockStatus,
+          user_name: updatedArt.user_name,
+          image: updatedArt.image,
+        }
+      }
+      const result = await artCollection.updateOne(filter,art,option)
+      res.send(result)
+    } )
 
 
 
