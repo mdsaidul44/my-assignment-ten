@@ -6,27 +6,28 @@ const port= process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middleware
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:5173","https://candid-truffle-a6f421.netlify.app"],
+   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    withCredentials: true,
+  }))
 app.use(express.json());
  
   
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pb63j1a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-console.log(uri)
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+const client = new MongoClient(uri,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
 });
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // Connect the client to the server	(optional starting in v4.7) 
 
     const artCollection = client.db('artDB').collection('art')
     const craftCollection = client.db('islam88758').collection('artCraftDb')
@@ -95,8 +96,7 @@ async function run() {
 
 
 
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // Send a ping to confirm a successful connection 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
