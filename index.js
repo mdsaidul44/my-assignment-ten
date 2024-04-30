@@ -9,6 +9,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(cors({
   origin: ["http://localhost:5173","https://candid-truffle-a6f421.netlify.app"],
    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+   
     withCredentials: true,
   }))
 app.use(express.json());
@@ -28,7 +29,7 @@ const client = new MongoClient(uri,{
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7) 
-
+    await client.connect()
     const artCollection = client.db('artDB').collection('art')
     const craftCollection = client.db('islam88758').collection('artCraftDb')
 
