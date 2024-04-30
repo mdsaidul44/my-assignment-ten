@@ -76,15 +76,13 @@ async function run() {
       const art ={
         $set:{
           subcategory_name: updatedArt.subcategory_name,
-          item_name: updatedArt.item_name,
-          user_email: updatedArt.user_email,
+          item_name: updatedArt.item_name, 
           short_description: updatedArt.short_description,
           price: updatedArt.price,
           rating: updatedArt.rating,
           customization: updatedArt.customization,
           processing_time: updatedArt.processing_time,
-          stockStatus: updatedArt.stockStatus,
-          user_name: updatedArt.user_name,
+          stockStatus: updatedArt.stockStatus, 
           image: updatedArt.image,
         }
       }
